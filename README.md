@@ -2,101 +2,89 @@
 
 ## JSON-RPC
 
-[View the spec][playground]
-
-The Ethereum JSON-RPC is a standard collection of methods that all execution
-clients implement. It is the canonical interface between users and the network.
-This interface allows downstream tooling and infrastructure to treat different
-Ethereum clients as modules that can be swapped at will.
+* == 💡standard collection of methods💡 /
+  * 👀ALL execution clients implement👀
+  * allows
+    * treating DIFFERENT Ethereum clients -- as -- modules / can be swapped
+  * 👀-- based on -- [OpenRPC](https://open-rpc.org) + [JSON schema specification](https://json-schema.org)👀 
+  * split | MULTIPLE files
+* == canonical interface BETWEEN users -- & -- network
+* [spec playground](https://ethereum.github.io/execution-apis/docs/reference/json-rpc-api)
 
 ### Contributing
 
-Please see the contributors guide in [`docs/making-changes.md`][making-changes]
-for general information about the process of standardizing new API methods and
-making changes to existing ones. Information on test generation can be found
-in [`tests/README.md`][test-gen]
+* [test generation](tests/README.md)
 
-The specification itself is written in [OpenRPC][openrpc]. Refer to the OpenRPC
-specification and the JSON schema [specification][json-schema] to get started.
+### how to build the specification?
 
-### Building
-
-The specification is split into multiple files to improve readability. The
-spec can be compiled into a single document as follows:
+* specification | MULTIPLE files -> compiled | 1! document
 
 ```console
 $ npm install
 $ npm run build
-Build successful.
+# Build successful.
+# "openrpc.json" | root of the project
 ```
-
-This will output the file `openrpc.json` in the root of the project. This file
-will have all schema `#ref`s resolved.
 
 #### Testing
 
-There are several mechanisms for testing specification contributions and client
-conformance.
+* [OpenRPC validator](https://open-rpc.github.io/schema-utils-js/functions/validateOpenRPCDocument.html)
+  * performs basic syntactic checks | generated specification
 
-First is the [OpenRPC validator][validator]. It performs some basic syntactic
-checks on the generated specification.
+    ```console
+    $ npm install
+    $ npm run lint
+    # OpenRPC spec validated successfully.
+    ```
 
-```console
-$ npm install
-$ npm run lint
-OpenRPC spec validated successfully.
-```
+* `speccheck`
+  * == tool / validates the test cases | ["tests/"](tests) -- against the -- specification
 
-Next is `speccheck`. This tool validates the test cases in the `tests`
-directory against the specification.
+    ```console
+    $ go install github.com/lightclient/rpctestgen/cmd/speccheck@latest
+    $ speccheck -v
+    all passing.
+    ```
 
-```console
-$ go install github.com/lightclient/rpctestgen/cmd/speccheck@latest
-$ speccheck -v
-all passing.
-```
+    * Problems:
+      * Problem1: "speccheck: command not found"
+        * Solution: check go binary is | your $PATH
 
-If you get an error that says: `speccheck: command not found`,
- make sure that the go binary is in your $PATH:
+            ```console
+            $ export PATH=$HOME/go/bin:$PATH
+            ```
 
-```console
-$ export PATH=$HOME/go/bin:$PATH
-```
+* pyspelling
+  * == wrapper of [Aspell](http://aspell.net/) & [Hunspell](https://hunspell.github.io/) 
 
-The spell checker ensures the specification is free of spelling errors.
+    ```console
+    $ pip install pyspelling
+    $ pyspelling -c spellcheck.yaml
+    Spelling check passed :)
+    ```
 
-```console
-$ pip install pyspelling
-$ pyspelling -c spellcheck.yaml
-Spelling check passed :)
-```
-
-pyspelling is a wrapper around either [Aspell](http://aspell.net/) or
-[Hunspell](https://hunspell.github.io/). You'll need to install
-one of those before running `pyspelling`.
-
-Finally, the test cases in the `tests/` directory may be run against individual
-execution client using the [`hive`] simulator [`rpc-compat`][rpc-compat].
-Please see the documentation in the aforementioned repositories for more
-information.
+* `hive` simulator
+  * allows
+    * run ["tests/"](tests) -- against -- individual execution client
+  * [`rpc-compat`](https://github.com/ethereum/hive/tree/master/simulators/ethereum/rpc-compat)
 
 ## GraphQL
 
-[View the spec][graphql-schema]
+* [spec](graphql.json)
+* [playground](http://graphql-schema.ethdevops.io/?url=https://raw.githubusercontent.com/ethereum/execution-apis/main/graphql.json)
+* proposed in [EIP-1767](https://eips.ethereum.org/EIPS/eip-1767)
+  * Reason: 🧠interact -- with -- Ethereum clients🧠
+    * implemented -- by -- Besu & Geth
 
-[EIP-1767][eip-1767] proposed a GraphQL schema for interacting with Ethereum clients. Since then Besu and Geth have implemented the interface. This repo contains a live specification to integrate changes to the protocol as well as other improvements into the GraphQL schema.
+### how to generate?
 
-### Generation
+* issue a meta GraphQL query -- against a -- live node
 
-The schema in this repo is generated by issuing a meta GraphQL query against a live node. This can be done as follows:
-
-```console
-$ npm run graphql:schema
-```
+    ```console
+    $ npm run graphql:schema
+    ```
 
 ### Testing
-
-A script is included in the source code which reads and validates the given schema to be a valid one. It is recommended to perform this check after modifying the schema by:
 
 ```console
 $ npm run graphql:validate
@@ -105,15 +93,3 @@ $ npm run graphql:validate
 ## License
 
 This repository is licensed under [CC0](LICENSE).
-
-
-[playground]: https://ethereum.github.io/execution-apis/docs/reference/json-rpc-api
-[openrpc]: https://open-rpc.org
-[validator]: https://open-rpc.github.io/schema-utils-js/functions/validateOpenRPCDocument.html
-[graphql-schema]: http://graphql-schema.ethdevops.io/?url=https://raw.githubusercontent.com/ethereum/execution-apis/main/graphql.json
-[eip-1767]: https://eips.ethereum.org/EIPS/eip-1767
-[making-changes]: docs/making-changes.md
-[json-schema]: https://json-schema.org
-[hive]: https://github.com/ethereum/hive
-[rpc-compat]: https://github.com/ethereum/hive/tree/master/simulators/ethereum/rpc-compat
-[test-gen]: tests/README.md
