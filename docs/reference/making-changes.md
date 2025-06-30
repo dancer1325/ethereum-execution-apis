@@ -1,11 +1,11 @@
 # Contributors Guide
 
-This guide will explain for new and experienced contributors alike how to
-propose changes to Ethereum JSON-RPC API.
+* goal
+  * how to make changes | Ethereum JSON-RPC API
 
 ## Introduction
 
-The Ethereum JSON-RPC API is the canonical interface between users and the
+* TODO: The Ethereum JSON-RPC API is the canonical interface between users and the
 Ethereum network. Each execution layer client implements the API as defined by
 the spec. 
 

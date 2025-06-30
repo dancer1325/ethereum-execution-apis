@@ -90,6 +90,9 @@ $ npm run build
 $ npm run graphql:validate
 ```
 
+# Documentation
+* [here](docs)
+
 ## License
 
 This repository is licensed under [CC0](LICENSE).
