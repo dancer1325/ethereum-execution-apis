@@ -1,7 +1,7 @@
 # Engine JSON-RPC API
 
 * == collection of methods /
-  * implemented by ALL execution clients
+  * implemented -- by -- ALL execution clients
   * allows
     * consensus layer can communicate -- with -- execution layer
       * == post-Merge Ethereum Client
