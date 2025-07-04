@@ -3,11 +3,12 @@
 * `engine` JSON-RPC interface
   * exposed -- by -- execution layer clients
   * consumed -- by -- consensus layer clients
-  * requires
+  * ⚠️requires⚠️
     * authentication
 
 * authentication scheme
   * == [JWT](https://jwt.io/)
+    * by default, enabled
   * attacks / this authentication scheme tries to protect against
     - RPC port 
       - -- exposed towards the -- internet
